@@ -1,13 +1,13 @@
 var Result = require('./pg').Result
 var prepare = require('./pg').prepareValue
 
-var Cursor = function(text, values) {
+var Cursor = function(text, values, cnf) {
   this.text = text
   this.values = values ? values.map(prepare) : null
   this.connection = null
   this._queue = []
   this.state = 'initialized'
-  this._result = new Result()
+  this._result = new Result(cnf.rowMode, cnf.types)
   this._cb = null
   this._rows = null
 }
